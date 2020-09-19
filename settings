@@ -1,0 +1,41 @@
+export GOROOT=/usr/local/go
+export GOPATH=/home/tharun/work/nsdcserverside
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+UPDATE mysql.user SET plugin = 'mysql_native_password' WHERE user = 'root' AND plugin = 'unix_socket';
+user root no need login
+user tharun password tharun
+
+https://capitalx.atlassian.net/wiki/spaces/ENG/pages/159220127/Development+Environment+Setup
+
+------------------------------------------------------
+sudo vault server --config=config.hcl
+before init
+export VAULT_ADDR=http://127.0.0.1:8200
+afer init
+export VAULT_TOKEN=s.J7vaWiUEk5tcbGKOxFgvYRuO
+
+tharun@tharun:~/work/brigeglobal$ vault operator init
+Unseal Key 1: zSK0S5JRCTNiaiC3KRQ1zgX3cpfURItU4zrsTgCrFJvb
+Unseal Key 2: Xk97V+YMD9uNfeGAP4JOuVr4/Zl2xtLEN1OD5u9lkdWO
+Unseal Key 3: beIAJY50hwBH6fEr4Alwn/2hqFuCBSQp627ztpF6REWb
+Unseal Key 4: lzphjok7lgkxtQHBiEMabLUIG3CVOSAVCm7AiVSpXgX1
+Unseal Key 5: sjwhpHi/oHow5vTiymlBGkJwN2AJZT45SE2Z23XcEuvD
+
+Initial Root Token: s.J7vaWiUEk5tcbGKOxFgvYRuO
+---------------------------------------------------------------------
+
+vault kv put secret/id database.host=localhost database.port=3306 database.user=tharun database.pass=tharun database.name=id debug=true server.port=8085 context.timeout=2
+
+vault kv put secret/bookkeeper database.host=localhost database.port=3306 database.user=tharun database.pass=tharun database.name=bookkeeper debug=true server.address=:4040 context.timeout=2 server.fineract_address=https://localhost:8443/fineract-provider/api/v1 server.fineract_tenant_id=default server.fineract_authorization="Basic bWlmb3M6cGFzc3dvcmQ="
+
+vault kv put secret/user database.host=localhost database.port=3306 database.user=tharun database.pass=tharun database.name=user debug=true server.address=:8080 context.timeout=2 server.account_address=localhost:7070 
+
+vault kv put secret/customer database.host=localhost database.port=3306 database.user=tharun database.pass=tharun database.name=customer debug=true server.address=:9090 context.timeout=2 server.user_address=localhost:8080 server.account_address=localhost:7070
+
+vault kv put secret/account database.host=localhost database.port=3306 database.user=tharun database.pass=tharun database.name=account debug=true server.address=:7070 server.customer_service_address=localhost:9090 server.bookkeeper_service_address=localhost:4040 context.timeout=2
+
+vault kv put secret/transaction database.host=localhost database.port=3306 database.user=tharun database.pass=tharun database.name=transaction debug=true server.address=:8081 context.timeout=2 server.account_service_address=localhost:7070 server.bookkeeper_service_address=localhost:4040 server.customer_service_address=localhost:9090 server.user_service_address=localhost:8080
+
+
+protoc --go_out=plugins=grpc:. bookkeeper.proto
