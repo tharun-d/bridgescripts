@@ -62,14 +62,38 @@ DROP TABLE IF EXISTS `saving_product`;
 DROP TABLE IF EXISTS `saving_product_rule`;
 DROP TABLE IF EXISTS `saving_account_amount_authorization`;
 DROP TABLE IF EXISTS `saving_account`;
+ 
+INSERT INTO saving_product (id,description,is_allow_overdraft,is_calculate_total_monthly_cash_in,is_calculate_pending_cash_in,is_calculate_pending_cash_out,created_timestamp,updated_timestamp) VALUES 
+(1,'E-Money Account',0,1,1,1,'2020-06-21 12:15:22.000',NULL),
+(2,'Partner Non Deposit Topup Account',1,0,0,1,'2020-06-21 12:17:27.000',NULL);
 
+INSERT INTO saving_product_rule (saving_product_id,code,value,created_by,created_timestamp,updated_by,updated_timestamp) VALUES 
+(1,'kyc[1].max_balance',2000000,0,'2020-06-21 12:24:55.000',NULL,NULL),
+(1,'kyc[2].max_balance',10000000,0,'2020-06-21 12:25:24.000',NULL,NULL),
+(1,'max_monthly_funds_in',20000000,0,'2020-06-21 12:25:57.000',NULL,NULL),
+(1,'min_topup_amount',10000,0,'2020-06-21 12:18:52.000',NULL,NULL);
+
+INSERT INTO saving_product_rule
+(saving_product_id, code, value, created_by, created_timestamp, updated_by, updated_timestamp)
+VALUES(2, 'max_overdraft', -1000000000, 0, CURRENT_TIMESTAMP(), 0, CURRENT_TIMESTAMP());
+INSERT INTO account.saving_product
+(id, description, is_allow_overdraft, is_calculate_total_monthly_cash_in, is_calculate_pending_cash_in, is_calculate_pending_cash_out, created_timestamp, updated_timestamp)
+VALUES(3, 'payment invoice-', 0, 0, 0, 0, '2020-07-21 13:52:22.000', NULL);
+	
+UPDATE saving_account SET fund_in_end_period = LAST_DAY(CURRENT_TIMESTAMP) WHERE fund_in_end_period IS NULL;
+
+ALTER TABLE saving_account ALTER fund_in_end_period SET DEFAULT LAST_DAY(CURRENT_TIMESTAMP);
 
 select card_no,customer_id, balance from saving_account where customer_id in (11015,11017)
 select * from saving_account where customer_id = 11017
 select * from saving_account where customer_id = 11015
-update saving_account set balance=1000 where customer_id = 11015
+delete from saving_account where customer_id = 11017 and balance = 0
+update saving_account set balance=100000 where customer_id = 11015
 
 select * from saving_account_amount_authorization
 delete from saving_account_amount_authorization
  select * from  saving_product_rule
+ select * from  saving_account
+select * from saving_product
+
 

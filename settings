@@ -39,3 +39,5 @@ vault kv put secret/transaction database.host=localhost database.port=3306 datab
 
 
 protoc --go_out=plugins=grpc:. bookkeeper.proto
+cd migratins then
+goose create token_event sql

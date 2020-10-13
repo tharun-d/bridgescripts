@@ -18,30 +18,18 @@ SET
     saTo.updated_timestamp = CURRENT_TIMESTAMP()
 WHERE
     TRUE
-    AND authFrom.transaction_id = 1
+    AND authFrom.transaction_id = ?
     AND authFrom.transaction_id = authTo.transaction_id
     AND authFrom.saving_account_id != authTo.saving_account_id
     AND authFrom.status = authTo.status
-    AND authTo.status = 112
+    AND authTo.status = ?
     AND saFrom.id = authFrom.saving_account_id
     AND saTo.id = authTo.saving_account_id
     AND saFrom.id != saTo.id
     AND authFrom.fund_in_amount = 0
     AND authTo.fund_out_amount = 0
     AND authTo.fund_in_amount >= (
-        SELECT
-            IFNULL (
-                (
-                    SELECT
-                        spr.value
-                    FROM
-                        saving_product_rule spr
-                    WHERE
-                        saving_product_id = saTo.saving_product_id
-                        AND spr.code = 'min_topup_amount'
-                ),
-                0
-            )
+     10000
     )
     AND (
         (
@@ -79,33 +67,12 @@ WHERE
             )
         )
     )
-    AND IFNULL(
-        saTo.balance + saTo.pending_fund_in + authTo.fund_in_amount <= (
-            SELECT
-                spr.value
-            FROM
-                saving_product_rule spr
-            WHERE
-                saving_product_id = saTo.saving_product_id
-                AND spr.code = "ss"
-        ),
-        TRUE
-    )
-    AND (
-        IFNULL(
-            (
-                CURRENT_TIMESTAMP < saTo.fund_in_end_period
-                AND saTo.total_monthly_fund_in + authTo.fund_in_amount <= (
-                    SELECT
-                        spr.value
-                    FROM
-                        saving_product_rule spr
-                    WHERE
-                        saving_product_id = saTo.saving_product_id
-                        AND spr.code = 'max_monthly_funds_in'
-                )
-            ),
-            TRUE
-        )
-        OR CURRENT_TIMESTAMP > saTo.fund_in_end_period
-    )
+
+INSERT INTO `user`.`user`
+(id, username, name, mobile, email, passcode, device_id, status, last_blocked, created_by, created_time, updated_by, updated_time, last_login)
+VALUES(Default, 'superadmin', 'Super admin', '999', '', '$argon2id$v=19$m=65536,t=3,p=2$9dll4EnCzFRSTSnqcOr/Fg$mjihhvFDpkvRV71JswTPEiBTyiGFeFXva9GkPRvuPD8', '7b5f9802-5fesb-42a7-a019-f39210191164', 1, NULL, 100, '2020-10-05 17:54:57.000', 100, '2020-10-05 17:54:57.000', NULL);
+
+insert into `role` values (Default,'super admin','role super admin added', 1 , now(), now(), '100', now())
+
+insert into user_application values (18016, 1,1 ,'100', now(), '100', now())
+
