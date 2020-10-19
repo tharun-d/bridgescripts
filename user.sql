@@ -116,6 +116,7 @@ ALTER TABLE user ADD `last_login` DATETIME;
 ALTER TABLE user ADD `block_reason` varchar(255) DEFAULT '';
 ALTER TABLE user MODIFY `passcode` VARCHAR(255)  NULL;
 ALTER TABLE user DROP domain ;
+ALTER TABLE user MODIFY  `updated_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 
 select * from role
 insert into `role` values (Default,'Role a','role a added', 1 , now(), now(), '11', now())
@@ -183,6 +184,51 @@ select u.id, u.email, u.status, u.last_login, u.block_reason from user u
 inner join user_role ur on ur.user_id = u.id 
 inner join role r on r.id = ur.role_id 
 inner join user_application ua on ua.user_id = u.id 
-inner join application a on a.id = ua.application_id 
+inner join application a on a.id = ua.application_id
 where a.name = 'dimiiland' and u.status != 4 and ur.status != 3 and r.name in ("Role a" ,"Role b") 
-group by u.id having  count(*) = 2 limit 5 offset 0
+group by u.id  having  count(*) = 2  order by u.updated_time limit 5 offset 0
+
+select u.id, u.email, u.status, u.last_login, u.block_reason from user u 
+inner join user_role ur on ur.user_id = u.id 
+inner join role r on r.id = ur.role_id 
+inner join user_application ua on ua.user_id = u.id 
+inner join application a on a.id = ua.application_id 
+where a.name = 'dimiiland' and u.status != 4 and r.name in('Role a') 
+group by u.id having count(*) = 2 order by u.updated_time limit 5 offset 0;
+
+
+select count(u.id) from ()
+select u.id, u.email, u.status, u.last_login, u.block_reason 
+from user u inner join user_role ur on ur.user_id = u.id 
+inner join role r on r.id = ur.role_id 
+inner join user_application ua on ua.user_id = u.id 
+inner join application a on a.id = ua.application_id 
+where a.name = 'dimiiland' and u.status != 4 and r.id in(1,2,3) 
+group by u.id having count(*) = 3 order by u.updated_time limit 5 offset 0;
+
+SELECT * from user order by updated_time desc limit 5 offset 1
+
+SELECT * from user where email = '11123@gmail.com'
+SELECT * from user_role
+
+select u.id, u.email, u.status, u.last_login, u.block_reason from user u 
+inner join user_role ur on ur.user_id = u.id 
+inner join role r on r.id = ur.role_id 
+inner join user_application ua on ua.user_id = u.id 
+inner join application a on a.id = ua.application_id 
+where a.name = 'dimiiland' and u.email like '%hell%' and u.id = 22005
+and u.status != 4 and ur.status != 2 
+order by u.updated_time desc limit 5 offset 0;
+
+select COUNT(*) from (
+	select u.id, u.email, u.status, u.last_login, u.block_reason from user u 
+inner join user_role ur on ur.user_id = u.id 
+inner join role r on r.id = ur.role_id 
+inner join user_application ua on ua.user_id = u.id 
+inner join application a on a.id = ua.application_id 
+where a.name = 'dimiiland' and u.status != 2 and ur.status != 2 
+group by u.id order by u.updated_time 
+) as hello
+
+
+desc limit 5 offset 0;
