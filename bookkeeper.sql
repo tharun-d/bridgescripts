@@ -64,3 +64,4 @@ delete from journal_setup where transaction_type = 3
 SELECT exists (SELECT * FROM journal_setup where transaction_type=2)
 SELECT remark FROM journal_setup where transaction_type=2
 SELECT entry_type,sequence,gl_account,mapping_field FROM journal_setup_entry where transaction_type=2
+ 

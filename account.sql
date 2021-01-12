@@ -93,7 +93,14 @@ update saving_account set balance=100000 where customer_id = 11015
 select * from saving_account_amount_authorization
 delete from saving_account_amount_authorization
  select * from  saving_product_rule
- select * from  saving_account
+ select * from  saving_account where customer_id = 13003
 select * from saving_product
 
+ALTER TABLE saving_account ADD `kyc_level` tinyint(3) NOT NULL DEFAULT 0
+
+ALTER TABLE saving_account MODIFY `id` bigint(20) UNSIGNED AUTO_INCREMENT;
+ALTER TABLE saving_account MODIFY `id`  BIGINT UNSIGNED NOT NULL;
+
+DELETE FROM account.saving_account
+WHERE id=1337238387983130624;
 

@@ -157,78 +157,29 @@ where user.id = user_application.user_id and user_application.application_id = a
 and user.username = 'superadmin'
 
 select  * from role_permission rp 
-insert into role_permission rp 
-
-select u.id, u.email, u.status, u.last_login, r.name from user u inner join user_role ur on ur.user_id = u.id inner join role r on r.id = ur.role_id inner join user_application ua on ua.user_id = u.id inner join application a on a.id = ua.application_id 
-where a.name = 'dimiiland' and u.status != 4 and ur.status != 3  group by u.id, r.name  limit 5 offset 0
-
-
-select r.name as rolename from user_role ur 
-inner join `role` r on ur.role_id = r.id 
-where ur.status = 1  and ur.user_id = 16000	
 
 select * from user_role ur 
-
-select u.id, u.email, u.status, u.last_login, u.block_reason from user u inner join user_application ua on ua.user_id = u.id inner join application a on a.id = ua.application_id 
-where a.name = 'dimiiland' and u.status != 4 order by u.updated_time limit 5 offset 0
-
-select u.id, u.email, u.status, u.last_login, u.block_reason, r.name from user u 
-inner join user_role ur on ur.user_id = u.id 
-inner join role r on r.id = ur.role_id 
-inner join user_application ua on ua.user_id = u.id 
-inner join application a on a.id = ua.application_id 
-where a.name = 'dimiiland' and u.status != 4
-and r.name = "Role a" and r.name =  "Role b" order by u.updated_time limit 5 offset 0;
-
-select u.id, u.email, u.status, u.last_login, u.block_reason from user u 
-inner join user_role ur on ur.user_id = u.id 
-inner join role r on r.id = ur.role_id 
-inner join user_application ua on ua.user_id = u.id 
-inner join application a on a.id = ua.application_id
-where a.name = 'dimiiland' and u.status != 4 and ur.status != 3 and r.name in ("Role a" ,"Role b") 
-group by u.id  having  count(*) = 2  order by u.updated_time limit 5 offset 0
-
-select u.id, u.email, u.status, u.last_login, u.block_reason from user u 
-inner join user_role ur on ur.user_id = u.id 
-inner join role r on r.id = ur.role_id 
-inner join user_application ua on ua.user_id = u.id 
-inner join application a on a.id = ua.application_id 
-where a.name = 'dimiiland' and u.status != 4 and r.name in('Role a') 
-group by u.id having count(*) = 2 order by u.updated_time limit 5 offset 0;
-
-
-select count(u.id) from ()
-select u.id, u.email, u.status, u.last_login, u.block_reason 
-from user u inner join user_role ur on ur.user_id = u.id 
-inner join role r on r.id = ur.role_id 
-inner join user_application ua on ua.user_id = u.id 
-inner join application a on a.id = ua.application_id 
-where a.name = 'dimiiland' and u.status != 4 and r.id in(1,2,3) 
-group by u.id having count(*) = 3 order by u.updated_time limit 5 offset 0;
 
 SELECT * from user order by updated_time desc limit 5 offset 1
 
 SELECT * from user where email = '11123@gmail.com'
 SELECT * from user_role
 
-select u.id, u.email, u.status, u.last_login, u.block_reason from user u 
-inner join user_role ur on ur.user_id = u.id 
-inner join role r on r.id = ur.role_id 
-inner join user_application ua on ua.user_id = u.id 
-inner join application a on a.id = ua.application_id 
-where a.name = 'dimiiland' and u.email like '%hell%' and u.id = 22005
-and u.status != 4 and ur.status != 2 
-order by u.updated_time desc limit 5 offset 0;
 
-select COUNT(*) from (
-	select u.id, u.email, u.status, u.last_login, u.block_reason from user u 
-inner join user_role ur on ur.user_id = u.id 
-inner join role r on r.id = ur.role_id 
-inner join user_application ua on ua.user_id = u.id 
-inner join application a on a.id = ua.application_id 
-where a.name = 'dimiiland' and u.status != 2 and ur.status != 2 
-group by u.id order by u.updated_time 
-) as hello
+select * from user where email = 'superadmin@dimii.dev'
 
+select last_login from `user` where last_login != null
 
-desc limit 5 offset 0;
+UPDATE `user` set last_login = now() 
+where email = 'ellennellen7@gmail.com'
+
+UPDATE `user` set email = "111", username = "a"
+where email = 'tharundintakurthi@gmail.com'
+
+ALTER TABLE `user` MODIFY `id` bigint(20) UNSIGNED AUTO_INCREMENT;
+ALTER TABLE user MODIFY `id`  BIGINT UNSIGNED NOT NULL;
+select * from user where username = 'superadmin' order by id desc
+
+select * from user order by id desc where email = "tharundintakurthi@gmail.com" order by id desc
+select * from permission p gdv ua p2  
+

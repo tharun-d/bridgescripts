@@ -37,19 +37,6 @@ CREATE TABLE IF NOT EXISTS transaction_event (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS token_event (
-    id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
-    token TEXT NOT NULL,
-    status VARCHAR(20) NOT NULL,
-    count int NOT NULL,
-    created_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-    updated_timestamp TIMESTAMP NULL,
-    blocked_until_timestamp TIMESTAMP NULL,
-    PRIMARY KEY (id)
-)
-select * from token_event te 
-delete  from token_event
-
 select * from `saving_account_transaction`
 select * from `transaction_event`
 delete from `transaction_event`
@@ -67,8 +54,14 @@ select te.id as transactionid, sct.saving_account_id,sct.transaction_type,sct.am
 	where sat.transaction_id = '200921083818208'
 and sat.transaction_type = 2 and dt.transaction_type =1 
 
-ALTER TABLE transaction_event ADD is_refunded BOOL NOT NULL DEFAULT FALSE;
-ALTER TABLE transaction_event DROP COLUMN is_refunded
 
 select * from transaction_event te where te.id = 200928153944866
+
+drop TABLE token_for_cpm
+
+CREATE TABLE IF NOT EXISTS token_for_cpm (
+  customer_id BIGINT UNSIGNED NOT NULL,
+  token varchar(30) NOT NULL,
+  created_timestamp TIMESTAMP NOT NULL
+);
 

@@ -38,6 +38,56 @@ vault kv put secret/account database.host=localhost database.port=3306 database.
 vault kv put secret/transaction database.host=localhost database.port=3306 database.user=tharun database.pass=tharun database.name=transaction debug=true server.address=:8081 context.timeout=2 server.account_service_address=localhost:7070 server.bookkeeper_service_address=localhost:4040 server.customer_service_address=localhost:9090 server.user_service_address=localhost:8080
 
 
-protoc --go_out=plugins=grpc:. bookkeeper.proto
+protoc --go_out=plugins=grpc:. user.proto --govalidators_out=
+protoc --go_out=plugins=grpc:. --grpc-gateway_out=grpc_api_configuration=customer.yaml:. customer.proto  -I${GOPATH}/src -I.
+
 cd migratins then
 goose create token_event sql
+mockery --all --keeptree
+
+
+go get git.capitalx.id/dimii/bookkeeper@59c12b0fbb80f473f25449e9e58ba6f176d06626
+go get git.capitalx.id/core/notification@1b572f109f00394ede53009e3c0dfe49d928a6fe
+go get git.capitalx.id/dimii/account@a5dd6f59c747135b6569d0bd75ee877bab268c26
+go get git.capitalx.id/core/user@93b2404bbc810749f03d6b4d0ba91d18622af287
+go get git.capitalx.id/dimii/customer@124bf6c88e9c38f865dd0ae25f950afb60cab7f0
+go get git.capitalx.id/dimii/transaction@f875e809bbe94bf7d751186cbdc46bee7e8ceb02
+
+"user_name": "superadmin@dimii.dev",
+"password": "capitalX23"
+
+from release to new branch
+from develop to new branch
+
+
+to develop new branch
+git merge --no-ff <branch_name>
+
+git push origin --delete finalEKTPTesting
+fuser -n tcp -k 8080 
+fuser -n tcp -k 9090 
+
+// login
+{
+  "passcode": "Hello",
+  "device_id": "3381a64c-fa72-4831-a05e-9ab3db6c9de8",
+  "mobile_number": "1221212111111"
+}
+
+// insert fund transfer
+{
+  "partner_reference_id": "033d1ac2-248b-41b3131-a952-5e7b11972c86",
+  "from_account_product": 1,
+  "from_customer_id": 1348532931953848320,
+  "from_customer_card_no": "122121211111121",
+  "to_account_product": 1,
+  "to_customer_id": 1348532517590167552,
+  "to_customer_card_no": "12212121111112",
+  "location_info": "Hello",
+  "amount": "12222",
+  "description": "Hello",
+  "is_commit": 1,
+  "event_type": 1,
+  "partner_payment_timestamp": 20
+}
+

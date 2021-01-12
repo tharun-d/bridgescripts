@@ -15,3 +15,6 @@ CREATE TABLE IF NOT EXISTS `notification_inbox` (
   PRIMARY KEY (`notification_id`),
   INDEX `fk_inbox_message_user_idx` (`user_id` ASC))
 ENGINE = InnoDB;
+
+
+SELECT * from notification_inbox order by notification_id desc limit 100

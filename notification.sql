@@ -56,3 +56,6 @@ where template.template_id = 'auth.gsuite.invite.user'
 update template 
 set message = 'Hello,<br/><br/>You are all set to access Dimiiland service. Please click on this link below to login.<br/><br/><a href="{{.inviteURL}}">Verify</a><br/><br/>For your security, this link will expire in 24 hour. Please contact your Dimiiland administrator to reactivate the link.<br/><br/>Regards,<br/>Dimiiland Team'
 where template.template_id = 'auth.mail.invite.user'
+
+
+select * from template where template_id = "kyc.level.unverified" and `language` = "id" and channel_type = 4
