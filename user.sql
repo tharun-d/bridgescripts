@@ -182,4 +182,9 @@ select * from user where username = 'superadmin' order by id desc
 
 select * from user order by id desc where email = "tharundintakurthi@gmail.com" order by id desc
 select * from permission p gdv ua p2  
-
+ALTER TABLE
+ user_device 
+ADD
+(
+ user_id bigint(20) unsigned NOT NULL DEFAULT 0
+);

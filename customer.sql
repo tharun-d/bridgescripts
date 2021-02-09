@@ -289,8 +289,27 @@ ALTER TABLE `customer_audit_logs` MODIFY column `request_id` varchar(255) NOT NU
 ALTER TABLE `temp_customer` MODIFY column `request_id` varchar(255) NOT NULL DEFAULT '';
 ALTER TABLE `kyc_rejection_reason` MODIFY column `reason` varchar(255) NOT NULL DEFAULT '';
 
-select * from customer offset 1 limit 1 
-
+select * from customer order by id desc
+select * from customer WHERE mobile = "2321234671"
 select * from customer.temp_customer 
 
+INSERT INTO customer.customer
+(id, name, mobile, email, cif, id_no, full_name, dob, gender, address, photo_url, icon_url, status, `type`, created_by, created_time, updated_by, updated_time, verification_status, ektp_status, requested_date, place_of_birth, blood_type, province, city, district, sub_district, religion, marital_status, employee, ektp_file_name, selfie_file_name, occupation, rt_rw)
+VALUES(1, 'Alfamart', '089671890224', 'gg@gmail.com', '380250663798', '11111', 'Alfamart', '2020-11-04 03:41:45.000', 0, 'hellooo test', 'https://firebasestorage.googleapis.com/v0/b/dimii-id.appspot.com/o/alfamart.png?alt=media&token=4ea85908-cdd0-4819-83d3-0836c62276c5', 'https://firebasestorage.googleapis.com/v0/b/dimii-id.appspot.com/o/alfamart.png?alt=media&token=4ea85908-cdd0-4819-83d3-0836c62276c5', 1, 1, 100, '2020-07-16 15:08:00.000', 100, '2020-11-13 12:29:13.000', 2, 1, '2020-11-13 05:29:13.000', 'Polavaram', 'B', 6, 0, 0, 0, 5, 'zsfsd sdfsdfsdf test', '', '', '', 'sdfsdfsdfsdf test', '');
+
+
+SELECT id, full_name, mobile, email, type, status, photo_url,verification_status FROM customer WHERE id = 1349276454151970816
+
+SELECT id, full_name, mobile, email, type, status, photo_url,verification_status 
+FROM customer WHERE id = 1356882159766093824 or id = 1356885489749880832
+
+SELECT id, full_name, mobile, email, type, status, photo_url,verification_status 
+FROM customer WHERE mobile = 1356882159766093824
+089671890224
+
+update customer set email = "gg11122@gmail.com", photo_url = "jwllw" where id = 1356882159766093824
+update customer set email = "gg11123@gmail.com", photo_url = "jwllw" where id = 1356885489749880832
+
+
+select * from customer c where id = 1351788135843319808
 

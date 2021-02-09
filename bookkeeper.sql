@@ -64,4 +64,17 @@ delete from journal_setup where transaction_type = 3
 SELECT exists (SELECT * FROM journal_setup where transaction_type=2)
 SELECT remark FROM journal_setup where transaction_type=2
 SELECT entry_type,sequence,gl_account,mapping_field FROM journal_setup_entry where transaction_type=2
- 
+
+INSERT INTO journal_setup_entry
+(transaction_type, entry_type, `sequence`, gl_account, mapping_field)
+VALUES(302, 'C', 1, 'GL_2110100', 'amount');
+INSERT INTO journal_setup_entry
+(transaction_type, entry_type, `sequence`, gl_account, mapping_field)
+VALUES(302, 'D', 1, 'GL_2110200', 'amount');
+INSERT INTO journal_setup
+(transaction_type, acc_transaction_type, remark, created_by, created_timestamp, updated_by, updated_timestamp)
+VALUES(302, NULL, 'CPM Account', 0, CURRENT_TIMESTAMP, NULL, NULL);
+
+delete from journal_setup_entry where transaction_type = 302;
+delete from journal_setup where transaction_type = 302;
+
