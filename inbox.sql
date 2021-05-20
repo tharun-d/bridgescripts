@@ -17,4 +17,4 @@ CREATE TABLE IF NOT EXISTS `notification_inbox` (
 ENGINE = InnoDB;
 
 
-SELECT * from notification_inbox order by notification_id desc limit 100
+SELECT * from notification_inbox order by notification_id desc limit 3

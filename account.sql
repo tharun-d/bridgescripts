@@ -48,7 +48,7 @@ ALTER TABLE saving_account MODIFY `id`  BIGINT UNSIGNED NOT NULL;
 
 DELETE FROM account.saving_account
 WHERE id=1337238387983130624;
-select * from  saving_account where customer_id = 1349276454151970816
+select * from  saving_account where customer_id = 1356885489749880832
 
 
 INSERT INTO account.saving_product
@@ -59,14 +59,17 @@ INSERT INTO account.saving_product_rule
 (saving_product_id, code, value, created_by, created_timestamp, updated_by, updated_timestamp)
 VALUES(10, 'payment_limit', 500000, 0, CURRENT_TIMESTAMP , 0, NULL);
 
-Delete from saving_product where id = 10;
-Delete from saving_product_rule where saving_product_id = 10;
+select * from goose_db_version gdv spr 
 
+select * from saving_account where customer_id = 1356885489749880832
+select * from saving_account where card_no = "7438928689018"
+INSERT INTO account.saving_account (id,card_no,customer_id,saving_product_id,balance,total_monthly_fund_in,fund_in_end_period,pending_fund_in,pending_fund_out,status,created_by,created_timestamp,updated_by,updated_timestamp,is_default_account) VALUES
+	 (16,'000015',15,10,0.0000,0.0000,CURRENT_TIMESTAMP(),0.0000,0.0000,1,100,CURRENT_TIMESTAMP(),100,CURRENT_TIMESTAMP(),1);
 
-select * from saving_account order by id desc 
-update saving_account set saving_product_id = 10 where card_no = "8989898989"
+select * from  saving_account_amount_authorization  
+select * from  saving_product sp ro 
+delete from  saving_account where customer_id = 10025
 
+SELECT * from saving_product_rule spr 
 
-select * from saving_account where customer_id = 1356882159766093824 
-or customer_id = 1356885489749880832
 

@@ -41,13 +41,30 @@ select * from `saving_account_transaction`
 select * from `transaction_event`
 delete from `transaction_event`
 
-select is_refunded from transaction_event te where te.id = 200928153944866
+select status, sub_status from transaction_event te where te.id = 200928153944866
 
 drop table token_for_cpm
 select * from token_for_cpm  
 select * from transaction_event order by id desc
 select * from transfer_blocklist tb order by created_timestamp desc
 
-select * from transaction_event where cpm_data is  not null order by id desc
+select * from transaction_event  order by id desc
+
+select * from goose_db_version gdv 
+
+CREATE TABLE IF NOT EXISTS transaction_additional_info (
+  id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
+  transaction_event_id BIGINT UNSIGNED NOT NULL,
+  partner_transaction_id BIGINT UNSIGNED NOT NULL,
+  partner_transaction_status VARCHAR(50),
+  detail_product text,
+  created_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (id)
+);
+
+INSERT INTO `transaction`.client_id_mapping
+(client_id, partner_id, created_by, created_timestamp)
+VALUES('partner.cpm.test', 13, 0, '2021-01-21 13:47:36.000');
 
 
+ALTER TABLE transactions MODIFY type BIGINT NOT NULL;

@@ -182,9 +182,16 @@ select * from user where username = 'superadmin' order by id desc
 
 select * from user order by id desc where email = "tharundintakurthi@gmail.com" order by id desc
 select * from permission p gdv ua p2  
-ALTER TABLE
- user_device 
-ADD
-(
- user_id bigint(20) unsigned NOT NULL DEFAULT 0
-);
+
+select * from user_device where mobile = "7438928689018"
+
+SELECT device_id, dev from user where mobile = "7438928689018"
+
+SELECT ud.mobile, ud.device_id, ud.expired_device_id_blocked, ud.counter, 
+		ud.status, ud.device_reg_token, ud.user_id
+		FROM user_device  ud
+		JOIN user u ON u.device_id = ud.device_id
+			 AND u.mobile = ud.mobile
+		WHERE u.mobile = "7438928689018"
+
+select * from user

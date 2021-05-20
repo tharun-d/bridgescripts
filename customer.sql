@@ -311,5 +311,34 @@ update customer set email = "gg11122@gmail.com", photo_url = "jwllw" where id = 
 update customer set email = "gg11123@gmail.com", photo_url = "jwllw" where id = 1356885489749880832
 
 
-select * from customer c where id = 1351788135843319808
+select * from customer c where mobile = "87767543222"
+select * from customer order by id desc
+DELETE FROM customer WHERE id = 1375398893319892992
+INSERT INTO customer (id,name,mobile,email,cif,id_no,full_name,dob,gender,address,photo_url,icon_url,status,`type`,created_by,created_time,updated_by,updated_time) VALUES
+	 (15,'Alfa Midi','000015','','1555','','Alfa Midi',NULL,1,'','https://firebasestorage.googleapis.com/v0/b/dimii-id.appspot.com/o/alfamart.png?alt=media&token=4ea85908-cdd0-4819-83d3-0836c62276c5','https://firebasestorage.googleapis.com/v0/b/dimii-id.appspot.com/o/alfamart.png?alt=media&token=4ea85908-cdd0-4819-83d3-0836c62276c5',1,1,100,CURRENT_TIMESTAMP(),100,CURRENT_TIMESTAMP());
+
+	delete from customer c where id = 14
+update customer set name = 'Alfamart', full_name = 'Alfamart' where id = 12;
+update customer set name = 'Alfamidi', full_name = 'Alfamidi' where id = 15;
+
+update customer set name = 'Alfa CPM', full_name = 'Alfa CPM' where id = 12;
+update customer set name = 'Alfa Midi', full_name = 'Alfa Midi' where id = 15;
+
+SELECT * from customer where id = 12 order by id desc
+update customer set country = 10, occupation = 1 where id = 1379183287214374912;
+
+ALTER TABLE `customer` DROP COLUMN `occupation`;
+ALTER TABLE `customer` ADD COLUMN `occupation` bigint NOT NULL default 0;
+
+ALTER TABLE `customer` ADD COLUMN `country` bigint NOT NULL default 0;
+
+SELECT * from customer_merchant where customer_id != "19063"
+SELECT * from customer_merchant where partner_account_id = "tengkutest" 
+SELECT * from client_id_mapping cim 
+
+INSERT INTO customer (id,name,mobile,email,cif,id_no,full_name,dob,gender,address,photo_url,icon_url,status,`type`,created_by,created_time,updated_by,updated_time) VALUES
+	 (24,'Biller AP','000024','','1778','','Biller AP Account',NULL,1,'','','',1,1,100,CURRENT_TIMESTAMP(),100,CURRENT_TIMESTAMP());
+
+SELECT * from customer_merchant where customer_id = 13004
+SELECT * from customer where id = 13004
 

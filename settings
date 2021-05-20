@@ -48,14 +48,17 @@ mockery --all --keeptree
 
 go get git.capitalx.id/dimii/bookkeeper@59c12b0fbb80f473f25449e9e58ba6f176d06626
 go get git.capitalx.id/core/notification@1b572f109f00394ede53009e3c0dfe49d928a6fe
-go get git.capitalx.id/dimii/account@c799c17
+go get git.capitalx.id/dimii/account@72c9146
 go get git.capitalx.id/core/user@93b2404bbc810749f03d6b4d0ba91d18622af287
-go get git.capitalx.id/dimii/customer@2def775f2647752da24231e7aab09f5eb87fbaf7
-go get git.capitalx.id/dimii/transaction@5d9abeab7b732ab67ac9ad9cc288a85561e5afa9
+go get git.capitalx.id/dimii/customer@e3034093a718722ba5d22948f7a9a2162fa9b6dc
+go get git.capitalx.id/dimii/transaction@dd6611a008024564a6ea45ae75f18dadb28e93ed
 
 go get git.capitalx.id/core/common@v1.2.9
 
 replace git.capitalx.id/dimii/transaction => /home/tharun/go/transaction
+replace git.capitalx.id/dimii/customer => /home/tharun/go/customer
+replace git.capitalx.id/core/user => /home/tharun/go/user
+
 
 "user_name": "superadmin@dimii.dev",
 "password": "capitalX23"
@@ -75,11 +78,11 @@ fuser -n tcp -k 9090
 {
   "passcode": "Hello",
   "device_id": "3381a64c-fa72-4831-a05e-9ab3db6c9de8",
-  "mobile_number": "2678991777"
+  "mobile_number": "7438928689018"
 }
 //dev
 {
-  "passcode": "Hello1",
+  "passcode": "Hello",
   "device_id": "3381a64c-fa72-4831-a05e-9ab3db6c9de8",
   "mobile_number": "7438928689018"
 }
@@ -101,15 +104,85 @@ fuser -n tcp -k 9090
   "partner_payment_timestamp": 20
 }
 
-CheckLoginPhoneNumberStatus -- generate otp
-
-GEnerateotp
-
---dev
-Alpha 1356882159766093824 mobile 8989898989
-update saving_account set saving_product_id = 10 where card_no = "8989898989"
+--local
+Cutomer ID 1361890580560961536 mobile 7438928689018
 
 --dev
 Cutomer ID 1356885489749880832 mobile 7438928689018
 update saving_account set balence = 20000000 where card_no = "7438928689018"
+
+--staging
+Cutomer ID 1359793842900631552 mobile 7438928689018
+
+alfa 
+  "encrypt.key": "3d8980ef920431682473c59a0d842fa231d07ae3e95a2dea3c47e876f0f7a3f3",
+
+transaction
+  "encrypt.key": "925a3ceeab3c8442a0db8db7719d2691",
+
+=======
+to insert new partner
+first create migration in customer, account
+make sure customer id is not equal to account id
+
+curl -k --compressed --user mifos:password --header "Content-Type: application/json" \
+  --request POST \
+  --data '{
+    "officeId": 1,
+    "fullname": <fullname in string>,
+    "externalId": <our customer id in string>,
+    "dateFormat": "dd MMMM yyyy",
+    "locale": "en",
+    "active": true,
+    "activationDate": "20 Nov 2020",
+    "submittedOnDate":"20 Nov 2020",
+    "savingsProductId" : <saving product id in int>
+}' \
+  https://localhost:8443/fineract-provider/api/v1/clients\?tenantIdentifier\=default
+
+
+INSERT INTO bookkeeper.bk_entity_mapping
+(module_id, app_id, external_id, STATUS, created_by, created_timestamp, updated_by, updated_timestamp)
+VALUES(1, <dimii customer id in number>, <bookkeeper client id in string>, 1, 1, CURRENT_TIMESTAMP(), NULL, CURRENT_TIMESTAMP());
+INSERT INTO bookkeeper.bk_entity_mapping
+(module_id, app_id, external_id, STATUS, created_by, created_timestamp, updated_by, updated_timestamp)
+VALUES(2, <dimii saving account id in number>, <bookkeeper savings id in string>, 1, 1, CURRENT_TIMESTAMP(), NULL, CURRENT_TIMESTAMP());
+=======
+
+SELECT id as bclientid, default_savings_account as bsavingsid 
+from m_client where external_id = <dimii customer id in number>
+
+
+saving acc        customerid
+13	000012	12 alfacpm
+14	000013	13 partnertest this is sucees 
+16	000015	15 alfamidi
+
+
+to get externalid (modeule 2 <bookkeeper savings id in string>)
+m_client external id 14
+
+do following first two in every repo afer git clone
+
+git config user.name "Tharun"
+git config user.email "tharun.d@bridge-global.com"
+git config remote.origin.url https://oauth2:XxsVCELfZ26zGjSvEckD@git.capitalx.id/dimii/bill-payment.git
+
+---
+AlfaPassword
+$argon2id$v=19$m=65536,t=3,p=4$fzIy2lmL5w9zzCP3X1OTdg$ARx8qA4NyYp7Nhu8vqeKs9r66K410EBhKJF1WFJTfuo
+
+AlfaSecretKey
+553105b4e3d772a558b277cc53a228070751a4421535e14cf96bda5343
+-----
+AlfaMidiPassword
+$argon2id$v=19$m=65536,t=3,p=4$m5hSdL1BHg7r27bIwaDZ+g$jy/RWKfUkHfIbfH2dQNBmDmtVicQrpNPFzZGDuQ3bPg
+
+AlfaMidiSecretKey
+553105b4fddb75be6ea35fdb4f12d6c6c4327b00f14b280a39c392a84c11a3c977
+
+curl 'https://api-dev.virgoku.dev/openid/oauth2/token' -H 'Accept: */*' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: api-dev.virgoku.dev' -H 'Connection: Keep-Alive' -H 'User-Agent: Apache-HttpClient/4.5.13 (Java/15)' --data-binary 'grant_type=client_credentials&scope=openid%20offline' -u 'partner.cpm.test:TnbiBsHoIqDSON6F1eUKeeKY7U' --compressed -k -v 
+
+curl 'https://api-stg.virgoku.dev/openid/oauth2/token' -H 'Accept: */*' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: api-stg.virgoku.dev' -H 'Connection: Keep-Alive' -H 'User-Agent: Apache-HttpClient/4.5.13 (Java/15)' --data-binary 'grant_type=client_credentials&scope=openid%20offline' -u 'partner.cpm.test:jiYJYWXhm2lS7.t4K46gzrZQE_' --compressed -k -v 
+
 

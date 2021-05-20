@@ -78,3 +78,13 @@ VALUES(302, NULL, 'CPM Account', 0, CURRENT_TIMESTAMP, NULL, NULL);
 delete from journal_setup_entry where transaction_type = 302;
 delete from journal_setup where transaction_type = 302;
 
+select * from bk_entity_mapping   order by app_id 
+select * from bk_entity_mapping  WHERE  app_id = 15 or app_id = 16
+select * from bk_entity_mapping  WHERE  app_id = 12
+select * from journal_setup_entry jse
+
+INSERT INTO bookkeeper.bk_entity_mapping
+(module_id, app_id, external_id, STATUS, created_by, created_timestamp, updated_by, updated_timestamp)
+VALUES(2, 22994, '13', 1, 1, CURRENT_TIMESTAMP(), NULL, CURRENT_TIMESTAMP());
+
+select 1.2::integer
